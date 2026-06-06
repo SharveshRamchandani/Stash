@@ -33,7 +33,7 @@ This document outlines the submission materials for the **First Investment App P
 
 ## 3. Working Web Prototype
 
-*   **Hosted Link:** `[YOUR_DEPLOYED_URL_HERE]` *(e.g. https://stash-first-invest.vercel.app)*
+*   **Hosted Link:** `[https://stashinvestment.vercel.app]` *(e.g. https://stash-first-invest.vercel.app)*
 
 ---
 
