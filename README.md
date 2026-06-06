@@ -33,7 +33,7 @@ This document outlines the submission materials for the **First Investment App P
 
 ## 3. Working Web Prototype
 
-*   **Hosted Link:** `[https://stashinvestment.vercel.app]` *(e.g. https://stash-first-invest.vercel.app)*
+*   **Hosted Link:** [https://stashinvestment.vercel.app](https://stashinvestment.vercel.app)
 
 ---
 
@@ -59,3 +59,13 @@ We built Stash for **Abhishek**. He wants to grow his savings but finds traditio
 
 ### How We Used AI
 We pair-programmed with AI to build the layout, implement the step timers and loaders for the automated setup checklists, align projection scenario values consistently across screens, configure typography themes, and verify mobile layout integrity.
+
+---
+
+## 5. Design & Scope Trade-offs
+
+*   **Every Screen Has a Reason:** Instead of a single busy dashboard, we built a 7-step guided journey (Welcome suggestion cards -> Inflation visualizer -> Budget quiz -> 3 Curated options comparison -> Interactive growth sliders -> Automated onboarding checklist -> Success milestone).
+*   **Zero Investment Knowledge Needed:** All options are explained using simple language (e.g. FD is "like a bank locker") and we replaced jargon like CAGR/Equity with clear, relatable descriptions.
+*   **Prominent Loss Visibility:** The "Bad Scenario" showing a simulated 5% market dip is placed side-by-side with the "Good Scenario", highlighted in red with a warning box: *"Only invest if you're okay with a little loss along the way."*
+*   **No Unnecessary Trading Features:** We completely cut candlestick charts, tickers, watchlists, futures, and options to keep the beginner focused on long-term compounding habits rather than transaction speed.
+*   **End-to-End Mock Journey:** The entire prototype works client-side using reactive state transitions without any complex database or payment dependencies.

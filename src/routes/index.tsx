@@ -199,7 +199,10 @@ function Welcome({ onNext }: { onNext: () => void }) {
           together.
         </p>
 
-        {/* Suggested paths section */}
+        {/* 
+          USER STORY 4: Clickable suggestions cards that open explanatory modals.
+          Designed to reduce choice overload and educate visual learners before they commit.
+        */}
         <div className="mb-8">
           <h3 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
             Suggested paths for you
@@ -316,6 +319,11 @@ function Welcome({ onNext }: { onNext: () => void }) {
 function Problem({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col h-full">
+      {/* 
+        CRITERION: Focus on helping the user understand "Why" they should invest.
+        By illustrating inflation (losing money in hand) vs growth (invested gently), 
+        we make the math real without intimidating trading screens.
+      */}
       <h2 className="text-2xl font-display font-semibold mb-2">Why invest at all?</h2>
       <p className="text-sm text-muted-foreground mb-6">
         Money left alone quietly loses value. Here's what ₹1,000 looks like after one year.
@@ -446,6 +454,10 @@ function Options({
   const [open, setOpen] = useState<OptionKey | null>(null);
   return (
     <div className="flex flex-col h-full">
+      {/* 
+        USER STORY 1: Simple side-by-side comparison of 3 beginner products.
+        Limits choice overload by comparing Fixed Deposit, Mutual Fund SIP, and Digital Gold.
+      */}
       <h2 className="text-2xl font-display font-semibold mb-1">3 options that fit you</h2>
       <p className="text-sm text-muted-foreground mb-5">
         Based on saving ₹{monthly}/month. Tap to pick one.
@@ -558,6 +570,10 @@ function Calculator({
 
   return (
     <div className="flex flex-col h-full">
+      {/* 
+        USER STORY 2 & CRITERION: Displaying possible losses (downturns) side-by-side with gains.
+        Uses interactive sliders to dynamically show realistic "Good" vs "Bad" (loss) scenarios.
+      */}
       <h2 className="text-2xl font-display font-semibold mb-1">See your money grow</h2>
       <p className="text-sm text-muted-foreground mb-7">
         Move the sliders and watch what happens.
@@ -696,6 +712,11 @@ function MockInvest({
         </div>
       </div>
 
+      {/* 
+        USER STORY 3 & SCOPE CUT: Simulated setup process checklist.
+        Real PAN verification, KYC check, and payment integration were cut to keep 
+        the prototype lightweight, using an automated progress bar to mock the steps instead.
+      */}
       {/* Setting things up Card */}
       <div className="rounded-3xl bg-card border border-border/80 p-5 mb-6 shadow-soft">
         <h3 className="text-base font-semibold text-foreground mb-4">Setting things up...</h3>
@@ -827,6 +848,11 @@ function Success({
         "The best time to start was yesterday. The next best time is now. You just did it." 🌱
       </p>
 
+      {/* 
+        USER STORY 5: Copy-to-clipboard sharing feature. 
+        Gives the user an easy "I Bet on Myself" milestone card to share with friends, 
+        building positive social reinforcement.
+      */}
       {/* Share Box */}
       <div className="rounded-3xl bg-secondary-soft p-5 mb-6 shadow-soft/30 space-y-4 border-0">
         <div className="flex items-center gap-2 text-secondary-foreground font-semibold text-sm">
