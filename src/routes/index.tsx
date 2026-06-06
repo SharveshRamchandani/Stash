@@ -183,14 +183,10 @@ function Stash() {
 /* ---------------- Screens ---------------- */
 
 function Welcome({ onNext }: { onNext: () => void }) {
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
-
-  const toggle = (id: string) => {
-    setExpandedCard((prev) => (prev === id ? null : id));
-  };
+  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-col h-full animate-fade-slide">
+    <div className="flex flex-col h-full animate-fade-slide relative">
       <div className="flex-1 flex flex-col justify-center">
         <div className="size-16 rounded-2xl bg-primary-soft flex items-center justify-center mb-6 shadow-soft">
           <HandCoins className="size-8 text-foreground" />
@@ -211,97 +207,108 @@ function Welcome({ onNext }: { onNext: () => void }) {
           <div className="space-y-3">
             {/* Card 1: Automatic Micro-Savings */}
             <div
-              onClick={() => toggle("savings")}
-              className="p-3.5 bg-primary-soft/40 border border-primary/20 rounded-2xl flex flex-col hover:bg-primary-soft/60 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
+              onClick={() => setSelectedSuggestion("savings")}
+              className="p-3.5 bg-primary-soft/40 border border-primary/20 rounded-2xl flex items-start gap-3 hover:bg-primary-soft/60 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
             >
-              <div className="flex items-start gap-3 w-full">
-                <div className="size-8 rounded-xl bg-primary-soft flex items-center justify-center flex-shrink-0 mt-0.5 text-primary">
-                  <Coins className="size-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex justify-between items-center">
-                    <h4 className="text-sm font-semibold text-foreground">Automatic Micro-Savings</h4>
-                    {expandedCard === "savings" ? (
-                      <ChevronUp className="size-4 text-primary" />
-                    ) : (
-                      <ChevronDown className="size-4 text-primary/70" />
-                    )}
-                  </div>
-                  <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
-                    Save ₹100 every week automatically to build compounding habits.
-                  </p>
-                </div>
+              <div className="size-8 rounded-xl bg-primary-soft flex items-center justify-center flex-shrink-0 mt-0.5 text-primary">
+                <Coins className="size-4" />
               </div>
-              {expandedCard === "savings" && (
-                <div className="mt-3 pt-3 border-t border-primary/10 text-[11px] text-foreground/85 leading-relaxed font-sans animate-fade-slide">
-                  Automate your savings by investing small amounts weekly. Stash sets aside tiny bits of money so you build an investing discipline without even noticing.
-                </div>
-              )}
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-foreground">Automatic Micro-Savings</h4>
+                <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
+                  Save ₹100 every week automatically to build compounding habits.
+                </p>
+              </div>
             </div>
 
             {/* Card 2: Rainy Day Buffer */}
             <div
-              onClick={() => toggle("rainy")}
-              className="p-3.5 bg-secondary-soft/40 border border-secondary/20 rounded-2xl flex flex-col hover:bg-secondary-soft/60 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
+              onClick={() => setSelectedSuggestion("rainy")}
+              className="p-3.5 bg-secondary-soft/40 border border-secondary/20 rounded-2xl flex items-start gap-3 hover:bg-secondary-soft/60 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
             >
-              <div className="flex items-start gap-3 w-full">
-                <div className="size-8 rounded-xl bg-secondary-soft flex items-center justify-center flex-shrink-0 mt-0.5 text-secondary">
-                  <Target className="size-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex justify-between items-center">
-                    <h4 className="text-sm font-semibold text-foreground">Rainy Day Buffer</h4>
-                    {expandedCard === "rainy" ? (
-                      <ChevronUp className="size-4 text-secondary" />
-                    ) : (
-                      <ChevronDown className="size-4 text-secondary/70" />
-                    )}
-                  </div>
-                  <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
-                    Create a separate 3-month expense cushion with fixed low-risk growth.
-                  </p>
-                </div>
+              <div className="size-8 rounded-xl bg-secondary-soft flex items-center justify-center flex-shrink-0 mt-0.5 text-secondary">
+                <Target className="size-4" />
               </div>
-              {expandedCard === "rainy" && (
-                <div className="mt-3 pt-3 border-t border-secondary/10 text-[11px] text-foreground/85 leading-relaxed font-sans animate-fade-slide">
-                  An emergency reserve ensures you don't have to borrow money when surprise expenses hit. It's stored in liquid assets that grow steadily and can be withdrawn instantly.
-                </div>
-              )}
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-foreground">Rainy Day Buffer</h4>
+                <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
+                  Create a separate 3-month expense cushion with fixed low-risk growth.
+                </p>
+              </div>
             </div>
 
             {/* Card 3: Smart Inflation Guard */}
             <div
-              onClick={() => toggle("inflation")}
-              className="p-3.5 bg-[color:var(--gold)]/10 border border-[color:var(--gold)]/20 rounded-2xl flex flex-col hover:bg-[color:var(--gold)]/15 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
+              onClick={() => setSelectedSuggestion("inflation")}
+              className="p-3.5 bg-[color:var(--gold)]/10 border border-[color:var(--gold)]/20 rounded-2xl flex items-start gap-3 hover:bg-[color:var(--gold)]/15 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
             >
-              <div className="flex items-start gap-3 w-full">
-                <div className="size-8 rounded-xl bg-[color:var(--gold)]/10 flex items-center justify-center flex-shrink-0 mt-0.5 text-[color:var(--gold)]">
-                  <TrendingUp className="size-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex justify-between items-center">
-                    <h4 className="text-sm font-semibold text-foreground">Smart Inflation Guard</h4>
-                    {expandedCard === "inflation" ? (
-                      <ChevronUp className="size-4 text-[color:var(--gold)]" />
-                    ) : (
-                      <ChevronDown className="size-4 text-[color:var(--gold)]/70" />
-                    )}
-                  </div>
-                  <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
-                    Explore digital gold purchases starting from just ₹10.
-                  </p>
-                </div>
+              <div className="size-8 rounded-xl bg-[color:var(--gold)]/10 flex items-center justify-center flex-shrink-0 mt-0.5 text-[color:var(--gold)]">
+                <TrendingUp className="size-4" />
               </div>
-              {expandedCard === "inflation" && (
-                <div className="mt-3 pt-3 border-t border-[color:var(--gold)]/25 text-[11px] text-foreground/85 leading-relaxed font-sans animate-fade-slide">
-                  Gold historically preserves its purchasing power as currency values decrease. Stash lets you buy pure, certified physical gold stored securely in local institutional vaults.
-                </div>
-              )}
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-foreground">Smart Inflation Guard</h4>
+                <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
+                  Explore digital gold purchases starting from just ₹10.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <PrimaryButton onClick={onNext}>Let's start</PrimaryButton>
+
+      {/* suggestion popup overlay */}
+      {selectedSuggestion && (
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-card border border-border/80 rounded-3xl p-6 shadow-soft-lg w-full max-w-[340px] animate-fade-slide flex flex-col items-center text-center relative">
+            {/* Top left back button */}
+            <button
+              onClick={() => setSelectedSuggestion(null)}
+              className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+              aria-label="Back"
+            >
+              <ArrowLeft className="size-4" />
+            </button>
+
+            {/* Card icon */}
+            <div className={cn(
+              "size-14 rounded-2xl flex items-center justify-center mb-4 text-lg mt-2",
+              selectedSuggestion === "savings" && "bg-primary-soft text-primary",
+              selectedSuggestion === "rainy" && "bg-secondary-soft text-secondary",
+              selectedSuggestion === "inflation" && "bg-[color:var(--gold)]/10 text-[color:var(--gold)]"
+            )}>
+              {selectedSuggestion === "savings" && <Coins className="size-6" />}
+              {selectedSuggestion === "rainy" && <Target className="size-6" />}
+              {selectedSuggestion === "inflation" && <TrendingUp className="size-6" />}
+            </div>
+
+            {/* Title */}
+            <h2 className="text-xl font-display font-semibold mb-3">
+              {selectedSuggestion === "savings" && "Automatic Micro-Savings"}
+              {selectedSuggestion === "rainy" && "Rainy Day Buffer"}
+              {selectedSuggestion === "inflation" && "Smart Inflation Guard"}
+            </h2>
+
+            {/* Description */}
+            <p className="text-xs text-muted-foreground leading-relaxed mb-6 font-sans">
+              {selectedSuggestion === "savings" &&
+                "Automate your savings by investing small amounts weekly. Stash sets aside tiny bits of money so you build an investing discipline without even noticing. It's the easiest way to start without feeling the pinch."}
+              {selectedSuggestion === "rainy" &&
+                "An emergency reserve ensures you don't have to borrow money when surprise expenses hit. It's stored in liquid assets that grow steadily and can be withdrawn instantly whenever you face unexpected costs."}
+              {selectedSuggestion === "inflation" &&
+                "Gold historically preserves its purchasing power as currency values decrease. Stash lets you buy pure, certified physical gold stored securely in local institutional vaults, starting from just ₹10."}
+            </p>
+
+            {/* Primary Action */}
+            <button
+              onClick={onNext}
+              className="py-2.5 px-6 rounded-xl bg-primary text-primary-foreground font-semibold text-xs transition-all hover:bg-primary/90 hover:scale-[1.01] active:scale-[0.99] shadow-soft cursor-pointer"
+            >
+              Start with this option
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
