@@ -173,7 +173,7 @@ function Stash() {
               onNext={() => go(7)}
             />
           )}
-          {step === 7 && <Success choice={choice} monthly={monthly} years={calcYears} />}
+          {step === 7 && <Success choice={choice} monthly={monthly} years={calcYears} onHome={() => go(1)} />}
         </div>
       </div>
     </div>
@@ -183,13 +183,14 @@ function Stash() {
 /* ---------------- Screens ---------------- */
 
 function Welcome({ onNext }: { onNext: () => void }) {
-  const badges = [
-    { icon: Coins, label: "Start with ₹100" },
-    { icon: Sparkles, label: "No exp needed" },
-    { icon: ShieldCheck, label: "Safe to explore" },
-  ];
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  const toggle = (id: string) => {
+    setExpandedCard((prev) => (prev === id ? null : id));
+  };
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full animate-fade-slide">
       <div className="flex-1 flex flex-col justify-center">
         <div className="size-16 rounded-2xl bg-primary-soft flex items-center justify-center mb-6 shadow-soft">
           <HandCoins className="size-8 text-foreground" />
@@ -197,22 +198,107 @@ function Welcome({ onNext }: { onNext: () => void }) {
         <h1 className="text-4xl font-display font-semibold leading-tight mb-3">
           Hi Abhishek 👋
         </h1>
-        <p className="text-base text-muted-foreground leading-relaxed mb-8">
+        <p className="text-base text-muted-foreground leading-relaxed mb-6">
           Your friend thought you were ready to start investing. We think so too. Let's take it slow,
           together.
         </p>
-        <div className="space-y-2.5 mb-10">
-          {badges.map((b) => (
+
+        {/* Suggested paths section */}
+        <div className="mb-8">
+          <h3 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
+            Suggested paths for you
+          </h3>
+          <div className="space-y-3">
+            {/* Card 1: Automatic Micro-Savings */}
             <div
-              key={b.label}
-              className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 py-3 shadow-soft"
+              onClick={() => toggle("savings")}
+              className="p-3.5 bg-primary-soft/40 border border-primary/20 rounded-2xl flex flex-col hover:bg-primary-soft/60 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
             >
-              <div className="size-8 rounded-lg bg-primary-soft flex items-center justify-center">
-                <b.icon className="size-4 text-foreground" />
+              <div className="flex items-start gap-3 w-full">
+                <div className="size-8 rounded-xl bg-primary-soft flex items-center justify-center flex-shrink-0 mt-0.5 text-primary">
+                  <Coins className="size-4" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex justify-between items-center">
+                    <h4 className="text-sm font-semibold text-foreground">Automatic Micro-Savings</h4>
+                    {expandedCard === "savings" ? (
+                      <ChevronUp className="size-4 text-primary" />
+                    ) : (
+                      <ChevronDown className="size-4 text-primary/70" />
+                    )}
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
+                    Save ₹100 every week automatically to build compounding habits.
+                  </p>
+                </div>
               </div>
-              <span className="text-sm font-medium">{b.label}</span>
+              {expandedCard === "savings" && (
+                <div className="mt-3 pt-3 border-t border-primary/10 text-[11px] text-foreground/85 leading-relaxed font-sans animate-fade-slide">
+                  Automate your savings by investing small amounts weekly. Stash sets aside tiny bits of money so you build an investing discipline without even noticing.
+                </div>
+              )}
             </div>
-          ))}
+
+            {/* Card 2: Rainy Day Buffer */}
+            <div
+              onClick={() => toggle("rainy")}
+              className="p-3.5 bg-secondary-soft/40 border border-secondary/20 rounded-2xl flex flex-col hover:bg-secondary-soft/60 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
+            >
+              <div className="flex items-start gap-3 w-full">
+                <div className="size-8 rounded-xl bg-secondary-soft flex items-center justify-center flex-shrink-0 mt-0.5 text-secondary">
+                  <Target className="size-4" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex justify-between items-center">
+                    <h4 className="text-sm font-semibold text-foreground">Rainy Day Buffer</h4>
+                    {expandedCard === "rainy" ? (
+                      <ChevronUp className="size-4 text-secondary" />
+                    ) : (
+                      <ChevronDown className="size-4 text-secondary/70" />
+                    )}
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
+                    Create a separate 3-month expense cushion with fixed low-risk growth.
+                  </p>
+                </div>
+              </div>
+              {expandedCard === "rainy" && (
+                <div className="mt-3 pt-3 border-t border-secondary/10 text-[11px] text-foreground/85 leading-relaxed font-sans animate-fade-slide">
+                  An emergency reserve ensures you don't have to borrow money when surprise expenses hit. It's stored in liquid assets that grow steadily and can be withdrawn instantly.
+                </div>
+              )}
+            </div>
+
+            {/* Card 3: Smart Inflation Guard */}
+            <div
+              onClick={() => toggle("inflation")}
+              className="p-3.5 bg-[color:var(--gold)]/10 border border-[color:var(--gold)]/20 rounded-2xl flex flex-col hover:bg-[color:var(--gold)]/15 transition-all cursor-pointer shadow-soft/30 hover:scale-[1.01] active:scale-[0.99]"
+            >
+              <div className="flex items-start gap-3 w-full">
+                <div className="size-8 rounded-xl bg-[color:var(--gold)]/10 flex items-center justify-center flex-shrink-0 mt-0.5 text-[color:var(--gold)]">
+                  <TrendingUp className="size-4" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex justify-between items-center">
+                    <h4 className="text-sm font-semibold text-foreground">Smart Inflation Guard</h4>
+                    {expandedCard === "inflation" ? (
+                      <ChevronUp className="size-4 text-[color:var(--gold)]" />
+                    ) : (
+                      <ChevronDown className="size-4 text-[color:var(--gold)]/70" />
+                    )}
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-0.5 font-sans leading-normal">
+                    Explore digital gold purchases starting from just ₹10.
+                  </p>
+                </div>
+              </div>
+              {expandedCard === "inflation" && (
+                <div className="mt-3 pt-3 border-t border-[color:var(--gold)]/25 text-[11px] text-foreground/85 leading-relaxed font-sans animate-fade-slide">
+                  Gold historically preserves its purchasing power as currency values decrease. Stash lets you buy pure, certified physical gold stored securely in local institutional vaults.
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
       <PrimaryButton onClick={onNext}>Let's start</PrimaryButton>
@@ -662,7 +748,17 @@ function MockInvest({
   );
 }
 
-function Success({ choice, monthly, years }: { choice: OptionKey; monthly: number; years: number }) {
+function Success({
+  choice,
+  monthly,
+  years,
+  onHome,
+}: {
+  choice: OptionKey;
+  monthly: number;
+  years: number;
+  onHome: () => void;
+}) {
   const o = OPTIONS[choice];
   const total = monthly * 12 * years;
   const good = Math.round(total * (1 + o.rate * years));
@@ -677,7 +773,7 @@ function Success({ choice, monthly, years }: { choice: OptionKey; monthly: numbe
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full animate-fade-slide">
       {/* Centered emoji circular badge */}
       <div className="size-20 rounded-full bg-primary-soft flex items-center justify-center mb-6 mx-auto text-4xl shadow-soft">
         🎉
@@ -741,6 +837,14 @@ function Success({ choice, monthly, years }: { choice: OptionKey; monthly: numbe
           {copied ? "Copied!" : "Copy to share"}
         </button>
       </div>
+
+      {/* Back to Home Button */}
+      <button
+        onClick={onHome}
+        className="w-full py-3.5 rounded-2xl border border-border bg-transparent hover:bg-muted font-semibold text-sm transition-all text-muted-foreground hover:text-foreground cursor-pointer flex items-center justify-center mb-6 shadow-soft/20 hover:scale-[1.01] active:scale-[0.99]"
+      >
+        Back to home
+      </button>
 
       {/* Footer Info Book Icon */}
       <div className="mt-auto pt-4 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
